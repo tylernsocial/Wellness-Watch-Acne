@@ -1,4 +1,4 @@
-## goal of script: 
+## goal of predict.py: 
 # load model
 # load class names
 # preprocess image
