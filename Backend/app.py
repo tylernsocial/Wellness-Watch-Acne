@@ -39,3 +39,15 @@ def allowed_file(filename):
 # ext4 = allowed_file("bomberman")
 
 # print(ext1, ext2, ext3, ext4)
+
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({
+        "message": "The backend server is running!"
+    })
+
+
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
