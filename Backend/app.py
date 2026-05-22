@@ -18,6 +18,23 @@
 # will also need the import CORS since react will use a different port than Flask,
 # and by default browsers may block some requests between different origins for security reasons
 # CORS(app) allows for the React frontend to call this backend
+"""
+backend API:
+built with flash and exposes a /predict route, which will accept an uploaded
+image, preprocesses it, and then sends it through the acne classifier model
+and returns the predicted class with a confidence score
+
+example response:
+response:
+
+```json
+{
+  "prediction": "class_name",
+  "confidence": 87.42
+}
+"""
+
+
 
 from flask import Flask, request, jsonify 
 from flask_cors import CORS 
