@@ -12,12 +12,26 @@ function App() { /* creates a react element called App which is reusable piece o
   function handleImageChange(event) { /* runs when the user pickers a file*/
     const file = event.target.files[0]; /* event contains information about what just happened, the line means get the first file the user selected*/
 
-    if (file) {
-      setSelectedImage(file);
-
-      const imageUrl = URL.createObjectURL(file); /*takes the file and creates a temp url for it so that react can also use it inside an image tag */
-      setPreviewUrl(imageUrl);
+    if (!file){
+      return;
     }
+
+    if (!file.type.startsWith("image/")) {
+      setSelectedImage(file);
+      setPreviewUrl(null);
+      setPrediction(null);
+      setError("Invalid file type. Please upload an image file.");
+
+      /* Reset the file input so the bad file is cleared*/
+      event.target.value = "";
+      return;
+    }
+    setSelectedImage(file);
+    const imageUrl = URL.createObjectURL(file); /*takes the file and creates a temp url for it so that react can also use it inside an image tag */
+    setPreviewUrl(imageUrl);
+      
+    setPrediction(null);
+    setError(null)
   }
 
   async function handleClassifyImage() { /* async, essentially means the fucntion will do something that takes time*/
@@ -41,12 +55,19 @@ function App() { /* creates a react element called App which is reusable piece o
         method: "POST", /* send data to the backend, POST request is usually for sending information in this case an uploaded image*/
         body: formData, /* the actual data that is being send, this case the image*/
       });
+      
+      let data;
 
+      try{
+        data = await response.json();/* waits for backend response and converts it into javascript data */
+      } catch {
+        data = { error: "Something went wrong. The server did not return a valid response." };
+      }
+      
       if (!response.ok) { /* backend sends a response with a status code,200 is succeess, 400 bad request, 404 route not found, 500 backend server error*/
-        throw new Error("Something went wrong with the prediction.");
+        throw new Error(data.error || "Something went wrong with the prediction.");
       }
 
-      const data = await response.json(); /* waits for backend response and converts it into jhavascript data */
       setPrediction(data);
     } catch (err) {
       setError(err.message);
@@ -63,7 +84,7 @@ function App() { /* creates a react element called App which is reusable piece o
       <div className="upload-box">
         <input 
           type="file" 
-          accept="image/*" 
+          accept="image/*"
           onChange={handleImageChange} /*when user selects a file run the function*/
         />
         

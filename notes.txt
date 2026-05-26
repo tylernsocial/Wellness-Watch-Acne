@@ -22,3 +22,10 @@ Saved Model
 flask = python framework which will be used to create web servers and APIs
 
 need to use flask since react wont be able to load and run the tf Model
+
+test for front and backend connected:
+1. test success for image getting chosen and predicted and everything showing ✓
+2. click classify without choosing an image, should result in error message ✓
+3. upload a non image file returns an error message ✓
+4. tried to classify when backend is not running should return failed to fetch ✓
+5. upload an image file that is far too large, return an error message about it ✓
