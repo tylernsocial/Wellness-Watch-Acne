@@ -68,7 +68,7 @@ def predict():
     if "image" not in request.files:
         return jsonify({
             "error": "No image file was uploaded"
-        })
+        }), 400
     
     image_file = request.files["image"]
 
