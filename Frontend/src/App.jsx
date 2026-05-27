@@ -82,6 +82,14 @@ function App() { /* creates a react element called App which is reusable piece o
     }
     return label.replaceAll("_", " ").split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
   }
+  /* clears all the states*/
+  function clearImage(){
+    setSelectedImage(null);
+    setPreviewUrl(null);
+    setPrediction(null);
+    setError(null);
+
+  }
 
   return ( /*everything inside return is what appears on the screen*/
     <div className="app">
@@ -110,9 +118,17 @@ function App() { /* creates a react element called App which is reusable piece o
         <button onClick={handleClassifyImage} disabled={loading}> {/* when the button is clicked, run the function, if loading is true, disable the button, and show classifiying, otherwise show classify image */}
           {loading ? "Classifying..." : "Classify Image"}
         </button>
+        {selectedImage && (
+          <button type="button" onClick={clearImage} className="clear-button">
+            Clear Image
+          </button>
+        )}
         {error && (
           <p className="error">{error}</p>
         )}
+        
+
+        
 
         {prediction && (
           <div className="result-box">
