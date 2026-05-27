@@ -156,7 +156,7 @@ function App() { /* creates a react element called App which is reusable piece o
         />
         
         {selectedImage && ( /*react conditional this says if SI exits then show this paragraph*/
-          <p>Selected file: {selectedImage.name}</p>
+          <p className="file-name">Selected file: {selectedImage.name}</p>
         )}
 
         {previewUrl && (
