@@ -18,22 +18,23 @@ function App() { /* creates a react element called App which is reusable piece o
       return;
     }
 
-    if (!file.type.startsWith("image/")) {
-      setSelectedImage(file);
-      setPreviewUrl(null);
-      setPrediction(null);
-      setError("Invalid file type. Please upload an image file.");
+    // if (!file.type.startsWith("image/")) {
+    //   setSelectedImage(file);
+    //   setPreviewUrl(null);
+    //   setPrediction(null);
+    //   setError("Invalid file type. Please upload an image file.");
 
-      /* Reset the file input so the bad file is cleared*/
-      event.target.value = "";
-      return;
-    }
-    setSelectedImage(file);
-    const imageUrl = URL.createObjectURL(file); /*takes the file and creates a temp url for it so that react can also use it inside an image tag */
-    setPreviewUrl(imageUrl);
+    //   /* Reset the file input so the bad file is cleared*/
+    //   event.target.value = "";
+    //   return;
+    // }
+    // setSelectedImage(file);
+    // const imageUrl = URL.createObjectURL(file); /*takes the file and creates a temp url for it so that react can also use it inside an image tag */
+    // setPreviewUrl(imageUrl);
       
-    setPrediction(null);
-    setError(null)
+    // setPrediction(null);
+    // setError(null)
+    validateAndSetImage(file);
   }
 
   async function handleClassifyImage() { /* async, essentially means the fucntion will do something that takes time*/
@@ -97,12 +98,56 @@ function App() { /* creates a react element called App which is reusable piece o
 
   }
 
+  function validateAndSetImage(file) {
+    if (!file.type.startsWith("image/")) {
+      setSelectedImage(null);
+      setPreviewUrl(null);
+      setPrediction(null);
+      setError("Invalid file type. Please upload an image file.");
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+
+      return;
+    }
+
+    setSelectedImage(file);
+
+    const imageUrl = URL.createObjectURL(file);
+    setPreviewUrl(imageUrl);
+
+    setPrediction(null);
+    setError(null);
+  }
+
+  function handleDrop(event) {
+    event.preventDefault();
+
+    const file = event.dataTransfer.files[0];
+
+    if (!file) {
+      return;
+    }
+
+    validateAndSetImage(file);
+  }
+
+  function handleDragOver(event) {
+    event.preventDefault();
+  }
+
   return ( /*everything inside return is what appears on the screen*/
     <div className="app">
       <h1>WW-Acne All In One Acne Tracker And Classifier</h1>
       <p>Upload an image to classify acne severity.</p>
 
-      <div className="upload-box">
+      <div 
+      className="upload-box"
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      >
+        <p className="drop-text"> Drag and drop an image here, or choose a file</p>
         <input 
           type="file" 
           ref={fileInputRef}

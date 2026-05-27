@@ -67,3 +67,13 @@ button:hover {
 .clear-button:hover {
   background-color: #555;
 }
+
+.drop-text {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.upload-box {
+  border: 2px dashed #aaa;
+}
