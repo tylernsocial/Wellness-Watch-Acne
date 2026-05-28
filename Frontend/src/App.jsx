@@ -135,15 +135,13 @@ function App() { /* creates a react element called App which is reusable piece o
 
       {/* floating top navbar */}
       <nav className="navbar">
-        <div className="logo">WW-Acne</div>
+        <div className="logo"> (insert logo) WW-Acne </div>
 
         <div className="nav-links">
-          <span>Classifier</span>
-          <span>Tracker</span>
           <span>About</span>
         </div>
 
-        <button className="nav-button">Contact Us</button>
+        <button className="nav-button">Help Improve The Model!</button>
       </nav>
 
       {/* main two-column layout */}
