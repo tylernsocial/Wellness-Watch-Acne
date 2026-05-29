@@ -29,3 +29,12 @@ test for front and backend connected:
 3. upload a non image file returns an error message ✓
 4. tried to classify when backend is not running should return failed to fetch ✓
 5. upload an image file that is far too large, return an error message about it ✓
+
+need to implement: 
+"help make the model better"
+acne tracker 
+- calendar
+- food intake
+- workout time to shower time 
+- sleep
+- whatever else an acne tracker has 
