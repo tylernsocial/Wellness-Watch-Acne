@@ -40,3 +40,4 @@ acne tracker
 - products used on face - skincare
 - 
 - whatever else an acne tracker has 
+add images to about page, drawn images black and white with red
