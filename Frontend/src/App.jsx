@@ -9,6 +9,11 @@ function App() { /* creates a react element called App which is reusable piece o
   const [loading, setLoading] = useState(false); /* whether the app is currently waiting for the backend */
   const [error, setError] = useState(null); /* stores and error message*/
 
+  const [openPopup, setOpenPopup] = useState(null); /* stores which popup is open right now.
+  null means no popup is open.
+  "about" means the About popup is open.
+  "learnAcne" means the Learn Acne popup is open. */
+
   const fileInputRef = useRef(null); /* reference to the file input*/
 
   function handleImageChange(event) { /* runs when the user pickers a file*/
@@ -199,8 +204,19 @@ function App() { /* creates a react element called App which is reusable piece o
         <div className="logo"> (insert logo) WW-Acne </div>
 
         <div className="nav-links">
-          <button className="nav-link-button">About</button>
-          <button className="nav-link-button">Learn Acne</button>
+          <button 
+            className="nav-link-button"
+            onClick={() => setOpenPopup("about")} /* opens the About popup */
+          >
+            About
+          </button>
+
+          <button 
+            className="nav-link-button"
+            onClick={() => setOpenPopup("learnAcne")} /* opens the Learn Acne popup */
+          >
+            Learn Acne
+          </button>
         </div>
 
         <button 
@@ -348,6 +364,80 @@ function App() { /* creates a react element called App which is reusable piece o
         </section>
 
       </main>
+
+      {/* popup card that opens when the About or Learn Acne navbar buttons are clicked */}
+      {openPopup && (
+        <div className="popup-overlay">
+          <div className="popup-card">
+            <button 
+              className="popup-close-button"
+              onClick={() => setOpenPopup(null)} /* closes whatever popup is currently open */
+            >
+              ×
+            </button>
+
+            {openPopup === "about" && (
+              <div>
+                <p className="eyebrow">About</p>
+                <h2>About WW-Acne</h2>
+
+                <p>
+                  WW-Acne stands for Wellness Watch Acne. It is an all-in-one acne
+                  classification and tracking tool designed to help users better
+                  understand their skin.
+                </p>
+
+                <p>
+                  The classifier allows users to upload a face or skin image and
+                  receive an AI-generated acne classification. It also helps users
+                  learn more about different acne types and what the results may mean.
+                </p>
+
+                <p>
+                  The tracker section is planned to help users identify possible
+                  breakout patterns by tracking calendar dates, food intake, workout
+                  and shower timing, sleep, skincare products, stress, notes, and
+                  progress over time.
+                </p>
+
+                <p className="popup-note">
+                  This tool is for learning and tracking support only. It is not a
+                  medical diagnosis.
+                </p>
+              </div>
+            )}
+
+            {openPopup === "learnAcne" && (
+              <div>
+                <p className="eyebrow">Learn Acne</p>
+                <h2>Acne Types</h2>
+
+                <div className="learn-acne-grid">
+                  {Object.entries(acneInfo).map(([key, info]) => (
+                    <div className="learn-acne-card" key={key}>
+                      <h3>{info.title}</h3>
+                      <p>{info.description}</p>
+
+                      <ul>
+                        {info.details.map((detail, index) => (
+                          <li key={index}>{detail}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="popup-note">
+                  These descriptions are for general learning only. Acne can vary by
+                  person, and persistent or painful acne should be discussed with a
+                  healthcare professional.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
