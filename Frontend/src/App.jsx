@@ -199,10 +199,16 @@ function App() { /* creates a react element called App which is reusable piece o
         <div className="logo"> (insert logo) WW-Acne </div>
 
         <div className="nav-links">
-          <span>About</span>
+          <button className="nav-link-button">About</button>
+          <button className="nav-link-button">Learn Acne</button>
         </div>
 
-        <button className="nav-button">Help Improve The Model!</button>
+        <button 
+          className="nav-button"
+          onClick={() => alert("Model contribution form coming soon!")}
+        >
+          Help Improve The Model!
+        </button>
       </nav>
 
       {/* main two-column layout */}

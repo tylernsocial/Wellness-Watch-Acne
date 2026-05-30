@@ -37,4 +37,6 @@ acne tracker
 - food intake
 - workout time to shower time 
 - sleep
+- products used on face - skincare
+- 
 - whatever else an acne tracker has 
