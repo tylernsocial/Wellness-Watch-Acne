@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'; /* allows a component remember information*/
 import './App.css';
+import AcneTracker from './AcneTracker.jsx';
 
 function App() { /* creates a react element called App which is reusable piece of UI*/
 
@@ -328,40 +329,8 @@ function App() { /* creates a react element called App which is reusable piece o
           </div>
         </section>
 
-        {/* right side: future acne tracker preview */}
-        <section className="tracker-panel">
-          <div className="tracker-content">
-            <p className="eyebrow">Coming Soon</p>
-            <h2>Acne Tracker</h2>
-
-            <p className="tracker-description">
-              In the future, this section can help users track lifestyle habits and skin progress over time.
-            </p>
-
-            <div className="tracker-preview-card large-preview">
-              <span>Progress Overview</span>
-              <strong>Weekly skin check-ins</strong>
-              <p>Compare acne changes across days, weeks, and routines.</p>
-            </div>
-
-            <div className="tracker-list">
-              <div className="tracker-preview-card">
-                <span>Food Logs</span>
-                <p>Track meals and possible triggers.</p>
-              </div>
-
-              <div className="tracker-preview-card">
-                <span>Sleep</span>
-                <p>Record sleep patterns and stress.</p>
-              </div>
-
-              <div className="tracker-preview-card">
-                <span>Skincare</span>
-                <p>Monitor products and routine changes.</p>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* right side: acne tracker component */}
+        <AcneTracker />
 
       </main>
 
@@ -394,10 +363,10 @@ function App() { /* creates a react element called App which is reusable piece o
                 </p>
 
                 <p>
-                  The tracker section is planned to help users identify possible
-                  breakout patterns by tracking calendar dates, food intake, workout
-                  and shower timing, sleep, skincare products, stress, notes, and
-                  progress over time.
+                  The tracker section helps users identify possible breakout patterns
+                  by tracking calendar dates, food intake, workout and shower timing,
+                  sleep, skincare products, stress, notes, skin images, and progress
+                  over time.
                 </p>
 
                 <p className="popup-note">
