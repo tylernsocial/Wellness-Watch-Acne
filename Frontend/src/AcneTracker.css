@@ -1,0 +1,126 @@
+.tracker-panel {
+  background: #d8e8f7;
+  border-radius: 24px;
+  padding: 2rem;
+  flex: 1;
+  min-width: 320px;
+}
+
+.tracker-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.tracker-description {
+  color: #5f7482;
+  line-height: 1.5;
+}
+
+.tracker-calendar {
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 18px;
+  padding: 1rem;
+}
+
+.calendar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.calendar-top h3 {
+  margin: 0;
+  color: #344955;
+}
+
+.calendar-top span {
+  font-size: 0.85rem;
+  color: #607d8b;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+}
+
+.calendar-day {
+  background: white;
+  border-radius: 12px;
+  padding: 0.7rem 0.3rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.calendar-day span {
+  display: block;
+  font-size: 0.7rem;
+  color: #6b7c85;
+}
+
+.calendar-day strong {
+  display: block;
+  margin-top: 0.2rem;
+  color: #344955;
+}
+
+.active-day {
+  outline: 2px solid #6fa8dc;
+}
+
+.daily-log {
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 18px;
+  padding: 1rem;
+}
+
+.daily-log h3 {
+  margin-top: 0;
+  color: #344955;
+}
+
+.log-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.9rem;
+}
+
+.log-item span {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #3f5f70;
+  text-transform: uppercase;
+}
+
+.log-item input,
+.log-item textarea {
+  border: none;
+  border-radius: 12px;
+  padding: 0.75rem;
+  font-family: inherit;
+  background: white;
+  color: #344955;
+}
+
+.log-item textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.save-log-btn {
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 0.8rem 1rem;
+  background: #344955;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.save-log-btn:hover {
+  opacity: 0.9;
+}
