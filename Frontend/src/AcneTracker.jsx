@@ -8,6 +8,9 @@ function AcneTracker() {
   /* keeps track of which calendar day is selected */
   const [selectedDate, setSelectedDate] = useState(today);
 
+  /* stores which month the calendar is currently showing */
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
   /* stores all tracker logs from localStorage */
   const [trackerLogs, setTrackerLogs] = useState({});
 
@@ -165,22 +168,67 @@ function AcneTracker() {
     });
   }
 
-  /* creates a simple 7-day calendar starting from today */
-  function getWeekDates() {
-    const dates = [];
+  /* gets the month title shown at the top of the calendar */
+  function getMonthTitle() {
+    return currentMonth.toLocaleDateString("en-US", {
+      month: "long",
+      year: "numeric",
+    });
+  }
 
-    for (let i = 0; i < 7; i++) {
-      const date = new Date();
-      date.setDate(date.getDate() + i);
+  /* moves the calendar to the previous month */
+  function goToPreviousMonth() {
+    setCurrentMonth((previousMonth) => {
+      const newMonth = new Date(previousMonth);
+      newMonth.setMonth(newMonth.getMonth() - 1);
+      return newMonth;
+    });
+  }
 
-      dates.push({
-        label: date.toLocaleDateString("en-US", { weekday: "short" }),
-        dayNumber: date.getDate(),
+  /* moves the calendar to the next month */
+  function goToNextMonth() {
+    setCurrentMonth((previousMonth) => {
+      const newMonth = new Date(previousMonth);
+      newMonth.setMonth(newMonth.getMonth() + 1);
+      return newMonth;
+    });
+  }
+
+  /* creates all the calendar boxes for the selected month */
+  function getMonthDates() {
+    const year = currentMonth.getFullYear();
+    const month = currentMonth.getMonth();
+
+    /* first day of the current month */
+    const firstDayOfMonth = new Date(year, month, 1);
+
+    /* last day of the current month */
+    const lastDayOfMonth = new Date(year, month + 1, 0);
+
+    /* gets which weekday the month starts on, where Sunday is 0 */
+    const startingWeekday = firstDayOfMonth.getDay();
+
+    /* gets how many days are in the current month */
+    const daysInMonth = lastDayOfMonth.getDate();
+
+    const calendarDays = [];
+
+    /* adds empty boxes before the first day so the calendar lines up correctly */
+    for (let i = 0; i < startingWeekday; i++) {
+      calendarDays.push(null);
+    }
+
+    /* adds the actual days of the month */
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+
+      calendarDays.push({
+        dayNumber: day,
         dateValue: formatDate(date),
       });
     }
 
-    return dates;
+    return calendarDays;
   }
 
   /* reusable section for each tracker category */
@@ -195,9 +243,9 @@ function AcneTracker() {
             className="add-bubble-btn"
             onClick={() => openAddForm(category)}
             aria-label={`Add ${title}`}
-            >
+          >
             Add
-            </button>
+          </button>
         </div>
 
         <div className="bubble-list">
@@ -263,28 +311,68 @@ function AcneTracker() {
 
         <div className="tracker-calendar">
           <div className="calendar-top">
-            <h3>Weekly Calendar</h3>
-            <span>{selectedDate}</span>
+            <button
+              type="button"
+              className="month-arrow"
+              onClick={goToPreviousMonth}
+              aria-label="Go to previous month"
+            >
+              ‹
+            </button>
+
+            <div className="calendar-title">
+              <h3>{getMonthTitle()}</h3>
+              <span>Selected: {selectedDate}</span>
+            </div>
+
+            <button
+              type="button"
+              className="month-arrow"
+              onClick={goToNextMonth}
+              aria-label="Go to next month"
+            >
+              ›
+            </button>
           </div>
 
-          <div className="calendar-grid">
-            {getWeekDates().map((day) => (
-              <button
-                key={day.dateValue}
-                type="button"
-                className={`calendar-day ${
-                  selectedDate === day.dateValue ? "active-day" : ""
-                } ${trackerLogs[day.dateValue] ? "logged-day" : ""}`}
-                onClick={() => setSelectedDate(day.dateValue)}
-              >
-                <span>{day.label}</span>
-                <strong>{day.dayNumber}</strong>
+          <div className="calendar-weekdays">
+            <span>Sun</span>
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thu</span>
+            <span>Fri</span>
+            <span>Sat</span>
+          </div>
 
-                {trackerLogs[day.dateValue] && (
-                  <small className="log-dot">●</small>
-                )}
-              </button>
-            ))}
+          <div className="calendar-grid month-grid">
+            {getMonthDates().map((day, index) => {
+              if (!day) {
+                return (
+                  <div
+                    key={`empty-${index}`}
+                    className="empty-calendar-day"
+                  />
+                );
+              }
+
+              return (
+                <button
+                  key={day.dateValue}
+                  type="button"
+                  className={`calendar-day ${
+                    selectedDate === day.dateValue ? "active-day" : ""
+                  } ${trackerLogs[day.dateValue] ? "logged-day" : ""}`}
+                  onClick={() => setSelectedDate(day.dateValue)}
+                >
+                  <strong>{day.dayNumber}</strong>
+
+                  {trackerLogs[day.dateValue] && (
+                    <small className="log-dot">●</small>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
 
