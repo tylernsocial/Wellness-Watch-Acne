@@ -343,7 +343,7 @@ function App() { /* creates a react element called App which is reusable piece o
               className="popup-close-button"
               onClick={() => setOpenPopup(null)} /* closes whatever popup is currently open */
             >
-              ×
+              x
             </button>
 
             {openPopup === "about" && (
@@ -413,3 +413,4 @@ function App() { /* creates a react element called App which is reusable piece o
 }
 
 export default App; /* this allows another file usually main.jsx to import and display the App component, so App.jsx defines the page, and main.jsx actually puts it onto the website */
+

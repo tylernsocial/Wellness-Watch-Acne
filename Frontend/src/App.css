@@ -124,7 +124,7 @@ button:disabled {
 
 /* Main two-column container */
 .main-card {
-  width: min(100%, 1450px);
+  width: min(100%, 1500px);
   min-height: 720px;
   padding: 18px;
   background: rgba(231, 239, 241, 0.18);
@@ -132,9 +132,9 @@ button:disabled {
   border-radius: 30px;
   box-shadow: 0 34px 80px rgba(17, 25, 27, 0.42);
   display: grid;
-  grid-template-columns: minmax(390px, 0.75fr) minmax(700px, 1.65fr);
+  grid-template-columns: minmax(520px, 0.95fr) minmax(820px, 1.45fr);
   gap: 18px;
-  align-items: stretch;
+  align-items: start;
 }
 
 /* Left side classifier panel */
@@ -144,7 +144,8 @@ button:disabled {
   border-radius: 22px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  align-self: start;
 }
 
 .panel-header {
@@ -183,9 +184,10 @@ button:disabled {
   border: 1px dashed rgba(166, 215, 241, 0.65);
   border-radius: 20px;
   display: grid;
-  grid-template-columns: minmax(205px, 0.95fr) minmax(175px, 1.05fr);
+  grid-template-columns: minmax(215px, 0.95fr) minmax(205px, 1.05fr);
   gap: 18px;
   align-items: center;
+  overflow: hidden;
 }
 
 /* Left side of upload card */
@@ -305,7 +307,7 @@ input[type="file"]::file-selector-button {
 .empty-preview,
 .preview-image {
   width: 100%;
-  min-height: 210px;
+  min-height: 220px;
   aspect-ratio: 1 / 1;
   border-radius: 16px;
 }
@@ -486,7 +488,7 @@ input[type="file"]::file-selector-button {
 }
 
 /* Tablet/mobile responsiveness */
-@media (max-width: 1250px) {
+@media (max-width: 1420px) {
   .main-card {
     grid-template-columns: 1fr;
   }

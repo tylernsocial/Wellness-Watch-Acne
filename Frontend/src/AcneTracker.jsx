@@ -1,9 +1,116 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./AcneTracker.css";
+
+/* creates a blank daily log whenever there is no saved data for a date */
+function createEmptyLog() {
+  return {
+    food: [],
+    workoutShower: [],
+    sleep: [],
+    skincare: [],
+    severity: "",
+    notes: [],
+    skinImage: "",
+  };
+}
+
+/* loads saved tracker logs from localStorage when the component first opens */
+function readSavedTrackerLogs() {
+  const savedLogs = localStorage.getItem("acneTrackerLogs");
+
+  if (!savedLogs) {
+    return {};
+  }
+
+  return JSON.parse(savedLogs);
+}
+
+/* reusable section for each tracker category */
+function TrackerBubbleSection({
+  title,
+  category,
+  placeholder,
+  formData,
+  activeAddForm,
+  newEntryText,
+  setNewEntryText,
+  openAddForm,
+  closeAddForm,
+  addBubbleEntry,
+  removeBubbleEntry,
+}) {
+  return (
+    <div className="bubble-section">
+      <div className="bubble-section-header">
+        <span>{title}</span>
+
+        <button
+          type="button"
+          className="add-bubble-btn"
+          onClick={() => openAddForm(category)}
+          aria-label={`Add ${title}`}
+        >
+          Add
+        </button>
+      </div>
+
+      <div className="bubble-list">
+        {/* shows example text when there are no bubbles in this category yet */}
+        {formData[category].length === 0 && (
+          <p className="empty-bubble-text">{placeholder}</p>
+        )}
+
+        {formData[category].map((entry, index) => (
+          <button
+            key={index}
+            type="button"
+            className="tracker-bubble"
+            onClick={() => removeBubbleEntry(category, index)}
+            title="Click to remove"
+          >
+            {entry}
+          </button>
+        ))}
+      </div>
+
+      {activeAddForm === category && (
+        <div className="add-entry-card">
+          <input
+            type="text"
+            value={newEntryText}
+            onChange={(event) => setNewEntryText(event.target.value)}
+            placeholder={placeholder}
+            autoFocus
+          />
+
+          <div className="add-entry-buttons">
+            <button type="button" onClick={addBubbleEntry}>
+              Add
+            </button>
+
+            <button type="button" onClick={closeAddForm}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* formats dates as YYYY-MM-DD without changing the timezone */
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
 
 function AcneTracker() {
   /* creates today's date using the user's local timezone instead of UTC */
   const today = formatDate(new Date());
+  const savedLogs = readSavedTrackerLogs();
 
   /* keeps track of which calendar day is selected */
   const [selectedDate, setSelectedDate] = useState(today);
@@ -12,7 +119,7 @@ function AcneTracker() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   /* stores all tracker logs from localStorage */
-  const [trackerLogs, setTrackerLogs] = useState({});
+  const [trackerLogs, setTrackerLogs] = useState(savedLogs);
 
   /* controls which small add form is currently open */
   const [activeAddForm, setActiveAddForm] = useState(null);
@@ -21,61 +128,10 @@ function AcneTracker() {
   const [newEntryText, setNewEntryText] = useState("");
 
   /* stores the current form values for the selected day */
-  const [formData, setFormData] = useState({
-    food: [],
-    workoutShower: [],
-    sleep: [],
-    skincare: [],
-    severity: "",
-    notes: [],
-    skinImage: "",
-  });
+  const [formData, setFormData] = useState(savedLogs[today] || createEmptyLog());
 
   /* stores the save message for successfully saving the log */
   const [showSaveMessage, setShowSaveMessage] = useState(false);
-
-  /* formats dates as YYYY-MM-DD without changing the timezone */
-  function formatDate(date) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-  }
-
-  /* creates a blank daily log whenever there is no saved data for a date */
-  function createEmptyLog() {
-    return {
-      food: [],
-      workoutShower: [],
-      sleep: [],
-      skincare: [],
-      severity: "",
-      notes: [],
-      skinImage: "",
-    };
-  }
-
-  /* loads saved tracker logs from localStorage when the component first opens */
-  useEffect(() => {
-    const savedLogs = localStorage.getItem("acneTrackerLogs");
-
-    if (savedLogs) {
-      setTrackerLogs(JSON.parse(savedLogs));
-    }
-  }, []);
-
-  /* whenever the selected date changes, load that day's saved log if it exists */
-  useEffect(() => {
-    if (trackerLogs[selectedDate]) {
-      setFormData(trackerLogs[selectedDate]);
-    } else {
-      setFormData(createEmptyLog());
-    }
-
-    setActiveAddForm(null);
-    setNewEntryText("");
-  }, [selectedDate, trackerLogs]);
 
   /* opens the small card/form for adding a new bubble */
   function openAddForm(category) {
@@ -199,6 +255,9 @@ function AcneTracker() {
   /* selects a calendar date and loads the log for that day */
   function selectCalendarDate(dateValue) {
     setSelectedDate(dateValue);
+    setFormData(trackerLogs[dateValue] || createEmptyLog());
+    setActiveAddForm(null);
+    setNewEntryText("");
   }
 
   /* creates all the calendar boxes for the selected month */
@@ -238,66 +297,16 @@ function AcneTracker() {
     return calendarDays;
   }
 
-  /* reusable section for each tracker category */
-  function TrackerBubbleSection({ title, category, placeholder }) {
-    return (
-      <div className="bubble-section">
-        <div className="bubble-section-header">
-          <span>{title}</span>
-
-          <button
-            type="button"
-            className="add-bubble-btn"
-            onClick={() => openAddForm(category)}
-            aria-label={`Add ${title}`}
-          >
-            Add
-          </button>
-        </div>
-
-        <div className="bubble-list">
-          {/* shows example text when there are no bubbles in this category yet */}
-          {formData[category].length === 0 && (
-            <p className="empty-bubble-text">{placeholder}</p>
-          )}
-
-          {formData[category].map((entry, index) => (
-            <button
-              key={index}
-              type="button"
-              className="tracker-bubble"
-              onClick={() => removeBubbleEntry(category, index)}
-              title="Click to remove"
-            >
-              {entry}
-            </button>
-          ))}
-        </div>
-
-        {activeAddForm === category && (
-          <div className="add-entry-card">
-            <input
-              type="text"
-              value={newEntryText}
-              onChange={(event) => setNewEntryText(event.target.value)}
-              placeholder={placeholder}
-              autoFocus
-            />
-
-            <div className="add-entry-buttons">
-              <button type="button" onClick={addBubbleEntry}>
-                Add
-              </button>
-
-              <button type="button" onClick={closeAddForm}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  }
+  const bubbleSectionProps = {
+    formData,
+    activeAddForm,
+    newEntryText,
+    setNewEntryText,
+    openAddForm,
+    closeAddForm,
+    addBubbleEntry,
+    removeBubbleEntry,
+  };
 
   return (
     <section className="tracker-panel">
@@ -394,30 +403,35 @@ function AcneTracker() {
             title="Food Intake"
             category="food"
             placeholder="Example: eggs, pasta, protein shake..."
+            {...bubbleSectionProps}
           />
 
           <TrackerBubbleSection
             title="Workout / Shower"
             category="workoutShower"
             placeholder="Example: workout 6 PM, shower 6:30 PM..."
+            {...bubbleSectionProps}
           />
 
           <TrackerBubbleSection
             title="Sleep"
             category="sleep"
             placeholder="Example: 7 hours, slept late..."
+            {...bubbleSectionProps}
           />
 
           <TrackerBubbleSection
             title="Skincare"
             category="skincare"
             placeholder="Example: cleanser, moisturizer, benzoyl peroxide..."
+            {...bubbleSectionProps}
           />
 
           <TrackerBubbleSection
             title="Notes"
             category="notes"
             placeholder="Example: stressed, drank lots of water, menstrual cycle..."
+            {...bubbleSectionProps}
           />
 
           <div className="log-item">
