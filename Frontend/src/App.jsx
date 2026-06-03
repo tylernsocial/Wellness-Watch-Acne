@@ -28,7 +28,6 @@ function App() { /* creates a react element called App which is reusable piece o
   }
 
   async function handleClassifyImage() { /* async, essentially means the fucntion will do something that takes time*/
-    
     if (!selectedImage) { /* check if image exists*/
       setError("Please select an image first.");
       return;
@@ -48,7 +47,7 @@ function App() { /* creates a react element called App which is reusable piece o
         method: "POST", /* send data to the backend, POST request is usually for sending information in this case an uploaded image*/
         body: formData, /* the actual data that is being send, this case the image*/
       });
-      
+
       let data;
 
       try {
@@ -56,7 +55,7 @@ function App() { /* creates a react element called App which is reusable piece o
       } catch {
         data = { error: "Something went wrong. The server did not return a valid response." };
       }
-      
+
       if (!response.ok) { /* backend sends a response with a status code, 200 is success, 400 bad request, 404 route not found, 500 backend server error*/
         throw new Error(data.error || "Something went wrong with the prediction.");
       }
@@ -202,17 +201,17 @@ function App() { /* creates a react element called App which is reusable piece o
 
       {/* floating top navbar */}
       <nav className="navbar">
-        <div className="logo"> (insert logo) WW-Acne </div>
+        <div className="logo">WW-Acne</div>
 
         <div className="nav-links">
-          <button 
+          <button
             className="nav-link-button"
             onClick={() => setOpenPopup("about")} /* opens the About popup */
           >
             About
           </button>
 
-          <button 
+          <button
             className="nav-link-button"
             onClick={() => setOpenPopup("learnAcne")} /* opens the Learn Acne popup */
           >
@@ -220,19 +219,19 @@ function App() { /* creates a react element called App which is reusable piece o
           </button>
         </div>
 
-        <button 
+        <button
           className="nav-button"
           onClick={() => alert("Model contribution form coming soon!")}
         >
-          Help Improve The Model!
+          Help Improve The Model
         </button>
       </nav>
 
-      {/* main two-column layout */}
+      {/* main dashboard layout: classifier on the left and tracker on the right */}
       <main className="main-card">
 
         {/* left side: working classifier */}
-        <section className="classifier-panel">
+        <section className="classifier-panel" id="classifier">
           <div className="panel-header">
             <p className="eyebrow">AI Skin Analysis</p>
             <h1>Acne Classifier</h1>
@@ -241,22 +240,24 @@ function App() { /* creates a react element called App which is reusable piece o
             </p>
           </div>
 
-          <div 
+          <div
             className="upload-box"
             onDrop={handleDrop}
             onDragOver={handleDragOver}
           >
             {/* left side of the classifier card: upload controls */}
             <div className="upload-controls">
-              <p className="drop-text">Drag and drop an image here, or choose a file</p>
+              <p className="drop-text">
+                Drag and drop an image here, or choose a file
+              </p>
 
-              <input 
-                type="file" 
+              <input
+                type="file"
                 ref={fileInputRef}
                 accept="image/*"
                 onChange={handleImageChange} /* when user selects a file run the function */
               />
-              
+
               {selectedImage && ( /* react conditional this says if SI exits then show this paragraph */
                 <p className="file-name">Selected file: {selectedImage.name}</p>
               )}
@@ -279,9 +280,9 @@ function App() { /* creates a react element called App which is reusable piece o
             {/* right side of the classifier card: image preview and prediction summary */}
             <div className="preview-result-area">
               {previewUrl ? (
-                <img 
-                  src={previewUrl} 
-                  alt="Selected preview" 
+                <img
+                  src={previewUrl}
+                  alt="Selected preview"
                   className="preview-image"
                 />
               ) : (
@@ -338,7 +339,7 @@ function App() { /* creates a react element called App which is reusable piece o
       {openPopup && (
         <div className="popup-overlay">
           <div className="popup-card">
-            <button 
+            <button
               className="popup-close-button"
               onClick={() => setOpenPopup(null)} /* closes whatever popup is currently open */
             >

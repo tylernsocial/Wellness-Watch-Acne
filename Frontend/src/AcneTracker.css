@@ -1,303 +1,405 @@
+/* Main tracker panel that sits on the right side of the dashboard */
 .tracker-panel {
-  background: #d8e8f7;
-  border-radius: 24px;
-  padding: 2rem;
-  flex: 1;
-  min-width: 320px;
+  min-width: 0;
+  padding: 0;
+  background: #d9e8f1;
+  border-radius: 22px;
+  color: #243940;
 }
 
+/* Tracker is split into three columns: calendar, daily log, and skin image/save card */
 .tracker-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
+  min-height: 100%;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: minmax(260px, 1.05fr) minmax(300px, 1fr) minmax(260px, 0.92fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.tracker-overview,
+.daily-log,
+.skin-log-card {
+  min-width: 0;
+  border-radius: 16px;
+}
+
+/* Left tracker column: title, description, and calendar */
+.tracker-overview {
+  padding: 20px;
+}
+
+.tracker-overview h2 {
+  margin: 0 0 12px;
+  color: #243940;
+  font-size: clamp(2.1rem, 3vw, 3.1rem);
+  line-height: 1;
 }
 
 .tracker-description {
-  color: #5f7482;
-  line-height: 1.5;
+  max-width: 430px;
+  margin: 0 0 26px;
+  color: #617882;
+  line-height: 1.55;
+  font-size: 0.9rem;
 }
 
+.tracker-calendar,
+.daily-log,
+.skin-log-card {
+  background: rgba(246, 250, 251, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 12px 26px rgba(36, 57, 64, 0.08);
+}
+
+/* Monthly calendar card */
 .tracker-calendar {
-  background: rgba(255, 255, 255, 0.65);
-  border-radius: 18px;
-  padding: 1rem;
+  padding: 16px;
+  border-radius: 16px;
 }
 
 .calendar-top {
-  display: flex;
+  display: grid;
+  grid-template-columns: 38px 1fr 38px;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.8rem;
-  margin-bottom: 1rem;
-}
-
-.calendar-top h3 {
-  margin: 0;
-  color: #344955;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
 .calendar-title {
   text-align: center;
 }
 
-
 .calendar-title h3 {
   margin: 0;
   color: #344955;
+  font-size: 1rem;
 }
 
 .calendar-title span {
   display: block;
-  margin-top: 0.25rem;
-  font-size: 0.78rem;
-  color: #607d8b;
+  margin-top: 4px;
+  color: #6e8792;
+  font-size: 0.75rem;
 }
 
-.calendar-top span {
-  font-size: 0.85rem;
-  color: #607d8b;
+.month-arrow {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #344955;
+  font-size: 1rem;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.calendar-grid {
+.month-arrow:hover {
+  background: #edf6f9;
+}
+
+.calendar-weekdays,
+.month-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.5rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.calendar-weekdays {
+  margin-bottom: 7px;
+}
+
+.calendar-weekdays span {
+  color: #6e8792;
+  text-align: center;
+  font-size: 0.66rem;
+  font-weight: 900;
+}
+
+.calendar-day,
+.empty-calendar-day {
+  min-width: 0;
+  min-height: 42px;
+  border-radius: 10px;
 }
 
 .calendar-day {
-  background: white;
-  border-radius: 12px;
-  padding: 0.7rem 0.3rem;
-  text-align: center;
-  cursor: pointer;
-}
-
-.calendar-day span {
-  display: block;
-  font-size: 0.7rem;
-  color: #6b7c85;
+  position: relative;
+  padding: 0;
+  background: #ffffff;
+  color: #344955;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .calendar-day strong {
-  display: block;
-  margin-top: 0.2rem;
-  color: #344955;
+  font-size: 0.82rem;
+}
+
+.calendar-day:hover {
+  background: #edf6f9;
 }
 
 .active-day {
-  outline: 2px solid #6fa8dc;
+  outline: 2px solid #75a9d0;
+  background: #eef8ff;
 }
 
+.logged-day {
+  background: #d7edf6;
+}
+
+/* small dot appears when a date has a saved log */
+.log-dot {
+  position: absolute;
+  right: 7px;
+  bottom: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #344955;
+}
+
+/* Middle tracker column: daily lifestyle logs */
 .daily-log {
-  background: rgba(255, 255, 255, 0.65);
-  border-radius: 18px;
-  padding: 1rem;
+  padding: 16px;
 }
 
 .daily-log h3 {
-  margin-top: 0;
+  margin: 0 0 14px;
   color: #344955;
-}
-
-.log-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  margin-bottom: 0.9rem;
-}
-
-.log-item span {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #3f5f70;
-  text-transform: uppercase;
-}
-
-.log-item input,
-.log-item textarea {
-  border: none;
-  border-radius: 12px;
-  padding: 0.75rem;
-  font-family: inherit;
-  background: white;
-  color: #344955;
-}
-
-.log-item textarea {
-  min-height: 80px;
-  resize: vertical;
-}
-
-.save-log-btn {
-  width: 100%;
-  border: none;
-  border-radius: 999px;
-  padding: 0.8rem 1rem;
-  background: #344955;
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.save-log-btn:hover {
-  opacity: 0.9;
+  font-size: 0.98rem;
+  font-weight: 800;
 }
 
 .bubble-section {
-  background: rgba(255, 255, 255, 0.55);
-  border-radius: 16px;
-  padding: 0.9rem;
-  margin-bottom: 0.9rem;
+  padding: 13px 0;
+  border-top: 1px solid rgba(52, 73, 85, 0.08);
+}
+
+.bubble-section:first-of-type {
+  border-top: none;
+  padding-top: 0;
 }
 
 .bubble-section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 0.7rem;
+  gap: 10px;
+  margin-bottom: 8px;
 }
 
-.bubble-section-header span {
-  font-size: 0.8rem;
-  font-weight: 800;
-  color: #3f5f70;
+.bubble-section-header span,
+.log-item span {
+  color: #4b6a78;
+  font-size: 0.68rem;
+  font-weight: 900;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .add-bubble-btn {
-  border: none;
-  border-radius: 999px;
-  background: #344955;
-  color: white;
-  cursor: pointer;
-
   width: auto;
-  min-width: 58px;
-  flex: 0 0 auto;
-
-  padding: 0.45rem 0.85rem;
-  font-size: 0.78rem;
-  font-weight: 800;
-  font-family: inherit;
-  line-height: 1;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  min-width: 52px;
+  min-height: 28px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #5b7885;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 900;
 }
 
 .add-bubble-btn:hover {
-  transform: scale(1.04);
-  opacity: 0.9;
+  background: #344955;
 }
 
+/* Bubbles wrap horizontally and become only as wide as the text inside them */
 .bubble-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 7px;
   align-items: flex-start;
-}
-
-.tracker-bubble {
-  border: none;
-  border-radius: 999px;
-  padding: 0.5rem 0.85rem;
-  background: white;
-  color: #344955;
-  font-weight: 700;
-  cursor: pointer;
-
-  width: fit-content;
-  max-width: 100%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  white-space: normal;
-  overflow-wrap: break-word;
-  word-break: break-word;
-}
-
-.tracker-bubble:hover {
-  opacity: 0.75;
 }
 
 .empty-bubble-text {
   margin: 0;
-  font-size: 0.82rem;
-  color: #718792;
+  color: #8a9fa7;
+  font-size: 0.78rem;
   font-style: italic;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
+.tracker-bubble {
+  width: auto;
+  max-width: 100%;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #344955;
+  font-size: 0.76rem;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.tracker-bubble:hover {
+  background: #edf6f9;
+}
+
+/* Small add-entry card that opens when the user presses Add */
 .add-entry-card {
-  margin-top: 0.8rem;
-  padding: 0.8rem;
-  background: white;
-  border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(36, 57, 64, 0.12);
 }
 
 .add-entry-card input {
   width: 100%;
-  border: none;
-  background: #edf5fa;
+  min-height: 40px;
+  padding: 10px 12px;
+  background: #edf6f9;
+  border: 1px solid rgba(52, 73, 85, 0.08);
   border-radius: 10px;
-  padding: 0.75rem;
   color: #344955;
-  font-family: inherit;
+  font: inherit;
 }
 
 .add-entry-buttons {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.7rem;
-}
-
-.add-entry-buttons button {
-  flex: 1;
-  border: none;
-  border-radius: 999px;
-  padding: 0.55rem;
-  font-weight: 700;
-  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 9px;
 }
 
 .add-entry-buttons button:first-child {
   background: #344955;
-  color: white;
+  color: #ffffff;
 }
 
 .add-entry-buttons button:last-child {
-  background: #edf5fa;
+  background: #edf6f9;
   color: #344955;
 }
 
+.log-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 14px 0 0;
+}
+
+.log-item select {
+  background: #ffffff;
+}
+
+/* Right tracker column: skin image upload and save/clear buttons */
+.skin-log-card {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.skin-image-control {
+  margin-top: 0;
+}
+
+/* keeps the skin-image file input readable inside the narrower right card */
+.skin-log-card input[type="file"] {
+  font-size: 0.72rem;
+}
+
+.skin-log-card input[type="file"]::file-selector-button {
+  font-size: 0.72rem;
+  padding: 7px 9px;
+}
+
+.skin-image-placeholder,
+.tracker-image-preview {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.skin-image-placeholder {
+  min-height: 190px;
+  background: #eef5f7;
+  border: 1px dashed rgba(52, 73, 85, 0.22);
+  color: #7f949c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.skin-image-placeholder p {
+  margin: 0;
+}
+
+.tracker-image-preview {
+  display: block;
+  max-height: 440px;
+  object-fit: cover;
+  border: 1px solid rgba(52, 73, 85, 0.12);
+  box-shadow: 0 10px 22px rgba(36, 57, 64, 0.14);
+}
+
+.has-skin-image {
+  align-self: stretch;
+}
+
+.tracker-buttons {
+  display: grid;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.save-log-btn {
+  background: #5b7885;
+  color: #ffffff;
+}
+
+.save-log-btn:hover {
+  background: #344955;
+}
+
+.clear-log-btn {
+  background: #ffffff;
+  color: #344955;
+}
+
+.clear-log-btn:hover {
+  background: #edf6f9;
+}
+
+/* Centered save message that appears after pressing Save Log */
 .save-toast {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-
-  background: #344955;
-  color: white;
-  padding: 1rem 1.4rem;
-  border-radius: 16px;
-  font-weight: 700;
-  font-size: 1rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   z-index: 9999;
-
+  transform: translate(-50%, -50%);
+  padding: 14px 20px;
+  background: #344955;
+  color: #ffffff;
+  border-radius: 14px;
+  font-weight: 900;
+  box-shadow: 0 18px 44px rgba(22, 32, 34, 0.3);
   animation: savePop 0.25s ease;
 }
 
 @keyframes savePop {
   from {
     opacity: 0;
-    transform: translate(-50%, -45%) scale(0.95);
+    transform: translate(-50%, -45%) scale(0.96);
   }
 
   to {
@@ -306,86 +408,33 @@
   }
 }
 
+@media (max-width: 1250px) {
+  .tracker-content {
+    grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
+  }
 
-.month-arrow {
-  width: 34px;
-  height: 34px;
-  border: none;
-  border-radius: 999px;
-  background: white;
-  color: #344955;
-  font-size: 1.6rem;
-  font-weight: 800;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .skin-log-card {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 220px;
+    align-items: end;
+  }
 }
 
-.month-arrow:hover {
-  opacity: 0.85;
-  transform: scale(1.05);
-}
+@media (max-width: 760px) {
+  .tracker-content {
+    padding: 12px;
+    grid-template-columns: 1fr;
+  }
 
-.calendar-weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.4rem;
-  margin-bottom: 0.45rem;
-}
+  .tracker-overview,
+  .daily-log,
+  .skin-log-card {
+    padding: 14px;
+  }
 
-.calendar-weekdays span {
-  text-align: center;
-  font-size: 0.68rem;
-  font-weight: 800;
-  color: #607d8b;
-}
-
-.month-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.4rem;
-}
-
-.calendar-day,
-.empty-calendar-day {
-  min-height: 42px;
-}
-
-.empty-calendar-day {
-  border-radius: 12px;
-}
-
-.calendar-day {
-  border: none;
-  border-radius: 12px;
-  background: white;
-  color: #344955;
-  cursor: pointer;
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.calendar-day strong {
-  font-size: 0.85rem;
-}
-
-.active-day {
-  outline: 2px solid #6fa8dc;
-  background: #eef7ff;
-}
-
-.logged-day {
-  background: #d7ecff;
-}
-
-.log-dot {
-  color: #344955;
-  font-size: 0.7rem;
-  line-height: 1;
-  margin-top: 0.15rem;
+  .skin-log-card {
+    grid-column: auto;
+    display: flex;
+  }
 }

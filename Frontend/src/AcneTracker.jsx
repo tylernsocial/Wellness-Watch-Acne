@@ -43,6 +43,19 @@ function AcneTracker() {
     return `${year}-${month}-${day}`;
   }
 
+  /* creates a blank daily log whenever there is no saved data for a date */
+  function createEmptyLog() {
+    return {
+      food: [],
+      workoutShower: [],
+      sleep: [],
+      skincare: [],
+      severity: "",
+      notes: [],
+      skinImage: "",
+    };
+  }
+
   /* loads saved tracker logs from localStorage when the component first opens */
   useEffect(() => {
     const savedLogs = localStorage.getItem("acneTrackerLogs");
@@ -57,15 +70,7 @@ function AcneTracker() {
     if (trackerLogs[selectedDate]) {
       setFormData(trackerLogs[selectedDate]);
     } else {
-      setFormData({
-        food: [],
-        workoutShower: [],
-        sleep: [],
-        skincare: [],
-        severity: "",
-        notes: [],
-        skinImage: "",
-      });
+      setFormData(createEmptyLog());
     }
 
     setActiveAddForm(null);
@@ -75,6 +80,12 @@ function AcneTracker() {
   /* opens the small card/form for adding a new bubble */
   function openAddForm(category) {
     setActiveAddForm(category);
+    setNewEntryText("");
+  }
+
+  /* closes the small add form without saving the typed text */
+  function closeAddForm() {
+    setActiveAddForm(null);
     setNewEntryText("");
   }
 
@@ -156,16 +167,7 @@ function AcneTracker() {
 
     setTrackerLogs(updatedLogs);
     localStorage.setItem("acneTrackerLogs", JSON.stringify(updatedLogs));
-
-    setFormData({
-      food: [],
-      workoutShower: [],
-      sleep: [],
-      skincare: [],
-      severity: "",
-      notes: [],
-      skinImage: "",
-    });
+    setFormData(createEmptyLog());
   }
 
   /* gets the month title shown at the top of the calendar */
@@ -192,6 +194,11 @@ function AcneTracker() {
       newMonth.setMonth(newMonth.getMonth() + 1);
       return newMonth;
     });
+  }
+
+  /* selects a calendar date and loads the log for that day */
+  function selectCalendarDate(dateValue) {
+    setSelectedDate(dateValue);
   }
 
   /* creates all the calendar boxes for the selected month */
@@ -282,13 +289,7 @@ function AcneTracker() {
                 Add
               </button>
 
-              <button
-                type="button"
-                onClick={() => {
-                  setActiveAddForm(null);
-                  setNewEntryText("");
-                }}
-              >
+              <button type="button" onClick={closeAddForm}>
                 Cancel
               </button>
             </div>
@@ -301,78 +302,81 @@ function AcneTracker() {
   return (
     <section className="tracker-panel">
       <div className="tracker-content">
-        <p className="eyebrow">Skin Journal</p>
-        <h2>Acne Tracker</h2>
+        {/* left tracker column: title, description, and monthly calendar */}
+        <div className="tracker-overview">
+          <p className="eyebrow">Skin Journal</p>
+          <h2>Acne Tracker</h2>
 
-        <p className="tracker-description">
-          Track daily habits, skin images, and lifestyle changes to help identify
-          possible breakout patterns over time.
-        </p>
+          <p className="tracker-description">
+            Track daily habits, skin images, and lifestyle changes to help identify
+            possible breakout patterns over time.
+          </p>
 
-        <div className="tracker-calendar">
-          <div className="calendar-top">
-            <button
-              type="button"
-              className="month-arrow"
-              onClick={goToPreviousMonth}
-              aria-label="Go to previous month"
-            >
-              ‹
-            </button>
+          <div className="tracker-calendar">
+            <div className="calendar-top">
+              <button
+                type="button"
+                className="month-arrow"
+                onClick={goToPreviousMonth}
+                aria-label="Go to previous month"
+              >
+                &lt;
+              </button>
 
-            <div className="calendar-title">
-              <h3>{getMonthTitle()}</h3>
-              <span>Selected: {selectedDate}</span>
+              <div className="calendar-title">
+                <h3>{getMonthTitle()}</h3>
+                <span>Selected: {selectedDate}</span>
+              </div>
+
+              <button
+                type="button"
+                className="month-arrow"
+                onClick={goToNextMonth}
+                aria-label="Go to next month"
+              >
+                &gt;
+              </button>
             </div>
 
-            <button
-              type="button"
-              className="month-arrow"
-              onClick={goToNextMonth}
-              aria-label="Go to next month"
-            >
-              ›
-            </button>
-          </div>
+            <div className="calendar-weekdays">
+              <span>Sun</span>
+              <span>Mon</span>
+              <span>Tue</span>
+              <span>Wed</span>
+              <span>Thu</span>
+              <span>Fri</span>
+              <span>Sat</span>
+            </div>
 
-          <div className="calendar-weekdays">
-            <span>Sun</span>
-            <span>Mon</span>
-            <span>Tue</span>
-            <span>Wed</span>
-            <span>Thu</span>
-            <span>Fri</span>
-            <span>Sat</span>
-          </div>
+            <div className="calendar-grid month-grid">
+              {getMonthDates().map((day, index) => {
+                if (!day) {
+                  return (
+                    <div
+                      key={`empty-${index}`}
+                      className="empty-calendar-day"
+                    />
+                  );
+                }
 
-          <div className="calendar-grid month-grid">
-            {getMonthDates().map((day, index) => {
-              if (!day) {
                 return (
-                  <div
-                    key={`empty-${index}`}
-                    className="empty-calendar-day"
-                  />
+                  <button
+                    key={day.dateValue}
+                    type="button"
+                    className={`calendar-day ${
+                      selectedDate === day.dateValue ? "active-day" : ""
+                    } ${trackerLogs[day.dateValue] ? "logged-day" : ""}`}
+                    onClick={() => selectCalendarDate(day.dateValue)}
+                  >
+                    <strong>{day.dayNumber}</strong>
+
+                    {trackerLogs[day.dateValue] && (
+                      <small className="log-dot" aria-label="Saved log" />
+                    )}
+                  </button>
                 );
-              }
-
-              return (
-                <button
-                  key={day.dateValue}
-                  type="button"
-                  className={`calendar-day ${
-                    selectedDate === day.dateValue ? "active-day" : ""
-                  } ${trackerLogs[day.dateValue] ? "logged-day" : ""}`}
-                  onClick={() => setSelectedDate(day.dateValue)}
-                >
-                  <strong>{day.dayNumber}</strong>
-
-                  {trackerLogs[day.dateValue] && (
-                    <small className="log-dot">●</small>
-                  )}
-                </button>
-              );
-            })}
+              })}
+            </div>
           </div>
         </div>
 
@@ -382,6 +386,7 @@ function AcneTracker() {
           </div>
         )}
 
+        {/* middle tracker column: bubble-based daily log */}
         <div className="daily-log">
           <h3>Log for {selectedDate}</h3>
 
@@ -430,19 +435,26 @@ function AcneTracker() {
               <option value="Severe">Severe</option>
             </select>
           </div>
+        </div>
 
-          <div className="log-item">
+        {/* right tracker column: skin image and save controls */}
+        <div className={`skin-log-card ${formData.skinImage ? "has-skin-image" : ""}`}>
+          <div className="log-item skin-image-control">
             <span>Skin Image</span>
             <input type="file" accept="image/*" onChange={handleImageUpload} />
-
-            {formData.skinImage && (
-              <img
-                src={formData.skinImage}
-                alt="Skin log preview"
-                className="tracker-image-preview"
-              />
-            )}
           </div>
+
+          {formData.skinImage ? (
+            <img
+              src={formData.skinImage}
+              alt="Skin log preview"
+              className="tracker-image-preview"
+            />
+          ) : (
+            <div className="skin-image-placeholder">
+              <p>No skin image added</p>
+            </div>
+          )}
 
           <div className="tracker-buttons">
             <button className="save-log-btn" onClick={handleSaveLog}>
