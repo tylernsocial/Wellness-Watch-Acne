@@ -254,29 +254,36 @@
 
 /* Small add-entry card that opens when the user presses Add */
 .add-entry-card {
-  margin-top: 10px;
-  padding: 10px;
+  margin-top: 8px;
+  padding: 8px;
   background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(36, 57, 64, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 6px 14px rgba(36, 57, 64, 0.1);
 }
 
 .add-entry-card input {
   width: 100%;
-  min-height: 40px;
-  padding: 10px 12px;
+  min-height: 34px;
+  padding: 8px 10px;
   background: #edf6f9;
   border: 1px solid rgba(52, 73, 85, 0.08);
-  border-radius: 10px;
+  border-radius: 9px;
   color: #344955;
   font: inherit;
+  font-size: 0.78rem;
 }
 
 .add-entry-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-top: 9px;
+  gap: 7px;
+  margin-top: 7px;
+}
+
+.add-entry-card .add-entry-buttons button {
+  min-height: 34px;
+  padding: 8px 12px;
+  font-size: 0.76rem;
 }
 
 .add-entry-buttons button:first-child {
