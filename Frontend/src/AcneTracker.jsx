@@ -107,6 +107,26 @@ function formatDate(date) {
   return `${year}-${month}-${day}`;
 }
 
+/* formats saved YYYY-MM-DD dates into readable labels like June 1st */
+function formatDisplayDate(dateValue) {
+  const [year, month, day] = dateValue.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  const daySuffix =
+    day % 10 === 1 && day !== 11
+      ? "st"
+      : day % 10 === 2 && day !== 12
+        ? "nd"
+        : day % 10 === 3 && day !== 13
+          ? "rd"
+          : "th";
+
+  const monthName = date.toLocaleDateString("en-US", {
+    month: "long",
+  });
+
+  return `${monthName} ${day}${daySuffix}`;
+}
+
 function AcneTracker() {
   /* creates today's date using the user's local timezone instead of UTC */
   const today = formatDate(new Date());
@@ -334,7 +354,7 @@ function AcneTracker() {
 
               <div className="calendar-title">
                 <h3>{getMonthTitle()}</h3>
-                <span>Selected: {selectedDate}</span>
+                <span>Selected: {formatDisplayDate(selectedDate)}</span>
               </div>
 
               <button
@@ -397,7 +417,7 @@ function AcneTracker() {
 
         {/* middle tracker column: bubble-based daily log */}
         <div className="daily-log">
-          <h3>Log for {selectedDate}</h3>
+          <h3>Log for {formatDisplayDate(selectedDate)}</h3>
 
           <TrackerBubbleSection
             title="Food Intake"

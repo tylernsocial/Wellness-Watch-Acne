@@ -201,7 +201,7 @@ function App() { /* creates a react element called App which is reusable piece o
 
       {/* floating top navbar */}
       <nav className="navbar">
-        <div className="logo">WW-Acne</div>
+        <div className="logo">Wellness Watch Acne</div>
 
         <div className="nav-links">
           <button
@@ -349,10 +349,10 @@ function App() { /* creates a react element called App which is reusable piece o
             {openPopup === "about" && (
               <div>
                 <p className="eyebrow">About</p>
-                <h2>About WW-Acne</h2>
+                <h2>About WWA</h2>
 
                 <p>
-                  WW-Acne stands for Wellness Watch Acne. It is an all-in-one acne
+                  WWA stands for Wellness Watch Acne. It is an all-in-one acne
                   classification and tracking tool designed to help users better
                   understand their skin.
                 </p>

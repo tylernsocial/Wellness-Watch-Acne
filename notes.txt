@@ -49,3 +49,7 @@ most recent:
 fix calendar buttons make a little wider 
 maybe split two containers so the the main glass one doesnt expand
         so have that there are two glass outlines instead of one big one that contains both containers 
+
+
+future:
+add a dashboard that can give you an analysis from how long you have been tracking, almost like a stock portfolio, maybe june to sept acne was high, sept to dec still a lot of breakouts 
