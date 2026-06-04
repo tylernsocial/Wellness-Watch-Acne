@@ -34,21 +34,7 @@ need to implement:
 "help make the model better" pin 
 
 main prio:
-acne tracker 
-- calendar
-- food intake
-- workout time to shower time 
-- sleep
-- products used on face - skincare
-- whatever else an acne tracker has 
-
-
-add images to about page, drawn images black and white with red pin
-
-most recent:
-fix calendar buttons make a little wider 
-maybe split two containers so the the main glass one doesnt expand
-        so have that there are two glass outlines instead of one big one that contains both containers 
+better UI
 
 
 future:
