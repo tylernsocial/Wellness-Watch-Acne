@@ -498,6 +498,40 @@ input[type="file"]::file-selector-button {
   }
 }
 
+.classifier-file-picker {
+  width: 100%;
+  min-height: 53px;
+  padding: 8px 10px;
+  background: rgba(246, 250, 251, 0.92);
+  border: 1px solid rgba(43, 64, 72, 0.12);
+  border-radius: 12px;
+  color: #243940;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  cursor: pointer;
+}
+
+.classifier-file-picker input {
+  display: none;
+}
+
+.classifier-file-button {
+  width: 100%;
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #243940;
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.classifier-file-text {
+  display: none;
+}
+
 @media (max-width: 760px) {
   .app {
     padding: 16px 10px 24px;

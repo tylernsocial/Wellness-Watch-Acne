@@ -251,12 +251,18 @@ function App() { /* creates a react element called App which is reusable piece o
                 Drag and drop an image here, or choose a file
               </p>
 
-              <input
-                type="file"
-                ref={fileInputRef}
-                accept="image/*"
-                onChange={handleImageChange} /* when user selects a file run the function */
-              />
+              <label className="classifier-file-picker">
+                <span className="classifier-file-button">Choose File</span>
+                <span className="classifier-file-text">
+                  {selectedImage ? selectedImage.name : "No file selected"}
+                </span>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  accept="image/*"
+                  onChange={handleImageChange} /* when user selects a file run the function */
+                />
+              </label>
 
               {selectedImage && ( /* react conditional this says if SI exits then show this paragraph */
                 <p className="file-name">Selected file: {selectedImage.name}</p>
