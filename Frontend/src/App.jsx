@@ -213,8 +213,6 @@ function App() { /* creates a react element called App which is reusable piece o
           className="avatar-image avatar-image-right"
         />
 
-        <div className="avatar-severity-marks avatar-severity-marks-left"></div>
-        <div className="avatar-severity-marks avatar-severity-marks-right"></div>
       </div>
 
       {/* floating top navbar */}

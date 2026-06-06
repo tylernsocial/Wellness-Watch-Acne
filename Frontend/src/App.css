@@ -74,60 +74,6 @@ body {
   width: clamp(470px, 44vw, 800px);
 }
 
-.avatar-severity-marks {
-  position: absolute;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-  transform: scale(0.96);
-  transition: opacity 0.24s ease, transform 0.24s ease;
-}
-
-.avatar-severity-marks-left {
-  left: clamp(130px, 16vw, 286px);
-  top: clamp(244px, 23vw, 372px);
-  width: clamp(104px, 10vw, 168px);
-  height: clamp(108px, 10vw, 172px);
-  border-radius: 48%;
-}
-
-.avatar-severity-marks-right {
-  right: clamp(126px, 15vw, 298px);
-  top: clamp(230px, 21vw, 344px);
-  width: clamp(128px, 13vw, 220px);
-  height: clamp(132px, 13vw, 226px);
-  border-radius: 48%;
-}
-
-.avatar-severity-marks-left,
-.avatar-severity-marks-right {
-  background:
-    radial-gradient(circle at 28% 30%, rgba(185, 46, 45, 0.55) 0 4px, transparent 5px),
-    radial-gradient(circle at 56% 24%, rgba(185, 46, 45, 0.48) 0 5px, transparent 6px),
-    radial-gradient(circle at 70% 46%, rgba(185, 46, 45, 0.42) 0 4px, transparent 5px),
-    radial-gradient(circle at 38% 60%, rgba(185, 46, 45, 0.34) 0 5px, transparent 6px),
-    radial-gradient(circle at 60% 72%, rgba(185, 46, 45, 0.28) 0 4px, transparent 5px);
-}
-
-.app:has(.tracker-panel[data-severity="Mild"]) .avatar-severity-marks {
-  opacity: 0.32;
-}
-
-.app:has(.tracker-panel[data-severity="Moderate"]) .avatar-severity-marks {
-  opacity: 0.58;
-  transform: scale(1.04);
-}
-
-.app:has(.tracker-panel[data-severity="Severe"]) .avatar-severity-marks {
-  opacity: 0.84;
-  transform: scale(1.12);
-}
-
-.app:has(.tracker-panel[data-severity="Clear / No breakout"]) .avatar-severity-marks,
-.app:has(.tracker-panel[data-severity="none"]) .avatar-severity-marks {
-  opacity: 0;
-}
-
 .navbar,
 .main-card,
 .classifier-panel,
@@ -682,15 +628,6 @@ input[type="file"]::file-selector-button {
     top: 520px;
   }
 
-  .avatar-severity-marks-left {
-    left: 72px;
-    top: 246px;
-  }
-
-  .avatar-severity-marks-right {
-    right: 44px;
-    top: 646px;
-  }
 }
 
 @media (max-width: 760px) {
@@ -710,20 +647,6 @@ input[type="file"]::file-selector-button {
     right: -190px;
     top: 720px;
     opacity: 0.5;
-  }
-
-  .avatar-severity-marks-left {
-    left: 54px;
-    top: 244px;
-    width: 94px;
-    height: 98px;
-  }
-
-  .avatar-severity-marks-right {
-    right: 28px;
-    top: 842px;
-    width: 112px;
-    height: 116px;
   }
 
   .navbar {
