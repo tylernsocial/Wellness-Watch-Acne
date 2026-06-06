@@ -69,9 +69,9 @@ body {
 }
 
 .avatar-image-right {
-  right: clamp(-96px, -6vw, -34px);
+  right: clamp(-210px, -11vw, -126px);
   top: 90px;
-  width: clamp(470px, 44vw, 800px);
+  width: clamp(500px, 45vw, 820px);
 }
 
 .navbar,
@@ -624,7 +624,7 @@ input[type="file"]::file-selector-button {
 
   .avatar-image-right {
     opacity: 0.68;
-    right: -160px;
+    right: -220px;
     top: 520px;
   }
 
@@ -644,7 +644,7 @@ input[type="file"]::file-selector-button {
 
   .avatar-image-right {
     width: 430px;
-    right: -190px;
+    right: -230px;
     top: 720px;
     opacity: 0.5;
   }
