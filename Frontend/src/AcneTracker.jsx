@@ -329,7 +329,7 @@ function AcneTracker() {
   };
 
   return (
-    <section className="tracker-panel">
+    <section className="tracker-panel" data-severity={formData.severity || "none"}>
       <div className="tracker-content">
         {/* left tracker column: title, description, and monthly calendar */}
         <div className="tracker-overview">

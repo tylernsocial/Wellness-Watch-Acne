@@ -1,15 +1,33 @@
 /* Main tracker panel that sits on the right side of the dashboard */
 .tracker-panel {
+  position: relative;
   min-width: 0;
   padding: 0;
-  background: #d9e8f1;
-  border-radius: 22px;
-  color: #243940;
+  border-radius: 28px;
+  color: var(--ink);
   align-self: start;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow), var(--inner-highlight);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  overflow: hidden;
+}
+
+.tracker-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.46), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 52%);
 }
 
 /* Tracker is split into three columns: calendar, daily log, and skin image/save card */
 .tracker-content {
+  position: relative;
+  z-index: 1;
   padding: 18px 26px 18px 18px;
   display: grid;
   grid-template-columns: minmax(380px, 1.18fr) minmax(285px, 0.95fr) minmax(250px, 0.82fr);
@@ -21,7 +39,7 @@
 .daily-log,
 .skin-log-card {
   min-width: 0;
-  border-radius: 16px;
+  border-radius: 22px;
 }
 
 /* Left tracker column: title, description, and calendar */
@@ -31,31 +49,38 @@
 
 .tracker-overview h2 {
   margin: 0 0 12px;
-  color: #243940;
-  font-size: clamp(2.1rem, 3vw, 3.1rem);
-  line-height: 1;
+  color: var(--ink);
+  font-size: clamp(2.25rem, 3vw, 3.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
 }
 
 .tracker-description {
   max-width: 430px;
   margin: 0 0 26px;
-  color: #617882;
+  color: var(--muted);
   line-height: 1.55;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 700;
 }
 
 .tracker-calendar,
 .daily-log,
-.skin-log-card {
-  background: rgba(246, 250, 251, 0.74);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 12px 26px rgba(36, 57, 64, 0.08);
+.skin-log-card,
+.add-entry-card,
+.skin-image-placeholder,
+.tracker-image-preview {
+  background: rgba(255, 255, 255, 0.17);
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  box-shadow: 0 18px 44px rgba(27, 45, 67, 0.14), var(--inner-highlight);
+  backdrop-filter: blur(16px) saturate(155%);
+  -webkit-backdrop-filter: blur(16px) saturate(155%);
 }
 
 /* Monthly calendar card */
 .tracker-calendar {
   padding: 14px;
-  border-radius: 16px;
+  border-radius: 22px;
 }
 
 .calendar-top {
@@ -72,15 +97,16 @@
 
 .calendar-title h3 {
   margin: 0;
-  color: #344955;
+  color: var(--ink);
   font-size: 1rem;
 }
 
 .calendar-title span {
   display: block;
   margin-top: 4px;
-  color: #6e8792;
+  color: rgba(18, 35, 45, 0.58);
   font-size: 0.75rem;
+  font-weight: 700;
 }
 
 .month-arrow {
@@ -88,17 +114,18 @@
   height: 38px;
   padding: 0;
   border-radius: 50%;
-  background: #ffffff;
-  color: #344955;
+  background: rgba(255, 255, 255, 0.32);
+  color: var(--ink);
   font-size: 1rem;
   font-weight: 900;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.74), 0 10px 22px rgba(36, 63, 87, 0.12);
 }
 
 .month-arrow:hover {
-  background: #edf6f9;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .calendar-weekdays,
@@ -113,7 +140,7 @@
 }
 
 .calendar-weekdays span {
-  color: #6e8792;
+  color: rgba(18, 35, 45, 0.58);
   text-align: center;
   font-size: 0.66rem;
   font-weight: 900;
@@ -124,17 +151,18 @@
   min-width: 0;
   min-height: 44px;
   width: 100%;
-  border-radius: 12px;
+  border-radius: 14px;
 }
 
 .calendar-day {
   position: relative;
   padding: 0;
-  background: #ffffff;
-  color: #344955;
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--ink);
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .calendar-day strong {
@@ -142,16 +170,16 @@
 }
 
 .calendar-day:hover {
-  background: #edf6f9;
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .active-day {
-  outline: 2px solid #75a9d0;
-  background: #eef8ff;
+  outline: 2px solid rgba(18, 35, 45, 0.62);
+  background: rgba(255, 255, 255, 0.44);
 }
 
 .logged-day {
-  background: #d7edf6;
+  background: rgba(255, 255, 255, 0.36);
 }
 
 /* small dot appears when a date has a saved log */
@@ -162,24 +190,25 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #344955;
+  background: rgba(18, 35, 45, 0.72);
 }
 
 /* Middle tracker column: daily lifestyle logs */
 .daily-log {
   padding: 16px;
+  border-radius: 22px;
 }
 
 .daily-log h3 {
   margin: 0 0 14px;
-  color: #344955;
-  font-size: 0.98rem;
-  font-weight: 800;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 900;
 }
 
 .bubble-section {
   padding: 13px 0;
-  border-top: 1px solid rgba(52, 73, 85, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
 }
 
 .bubble-section:first-of-type {
@@ -197,7 +226,7 @@
 
 .bubble-section-header span,
 .log-item span {
-  color: #4b6a78;
+  color: rgba(18, 35, 45, 0.7);
   font-size: 0.68rem;
   font-weight: 900;
   text-transform: uppercase;
@@ -210,14 +239,15 @@
   min-height: 28px;
   padding: 7px 11px;
   border-radius: 999px;
-  background: #5b7885;
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.32);
+  color: var(--ink);
   font-size: 0.68rem;
   font-weight: 900;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72), 0 10px 22px rgba(36, 63, 87, 0.1);
 }
 
 .add-bubble-btn:hover {
-  background: #344955;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 /* Bubbles wrap horizontally and become only as wide as the text inside them */
@@ -230,7 +260,7 @@
 
 .empty-bubble-text {
   margin: 0;
-  color: #8a9fa7;
+  color: rgba(18, 35, 45, 0.48);
   font-size: 0.78rem;
   font-style: italic;
   line-height: 1.35;
@@ -241,34 +271,33 @@
   max-width: 100%;
   padding: 7px 10px;
   border-radius: 999px;
-  background: #ffffff;
-  color: #344955;
+  background: rgba(255, 255, 255, 0.34);
+  color: var(--ink);
   font-size: 0.76rem;
   font-weight: 800;
   overflow-wrap: anywhere;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
 }
 
 .tracker-bubble:hover {
-  background: #edf6f9;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 /* Small add-entry card that opens when the user presses Add */
 .add-entry-card {
   margin-top: 8px;
   padding: 8px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 6px 14px rgba(36, 57, 64, 0.1);
+  border-radius: 16px;
 }
 
 .add-entry-card input {
   width: 100%;
   min-height: 34px;
   padding: 8px 10px;
-  background: #edf6f9;
-  border: 1px solid rgba(52, 73, 85, 0.08);
-  border-radius: 9px;
-  color: #344955;
+  background: rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  color: var(--ink);
   font: inherit;
   font-size: 0.78rem;
 }
@@ -286,16 +315,6 @@
   font-size: 0.76rem;
 }
 
-.add-entry-buttons button:first-child {
-  background: #344955;
-  color: #ffffff;
-}
-
-.add-entry-buttons button:last-child {
-  background: #edf6f9;
-  color: #344955;
-}
-
 .log-item {
   display: flex;
   flex-direction: column;
@@ -304,7 +323,22 @@
 }
 
 .log-item select {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.tracker-panel[data-severity="Mild"] .log-item select {
+  border-color: rgba(185, 46, 45, 0.24);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 0 0 3px rgba(185, 46, 45, 0.07);
+}
+
+.tracker-panel[data-severity="Moderate"] .log-item select {
+  border-color: rgba(185, 46, 45, 0.34);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 0 0 4px rgba(185, 46, 45, 0.1);
+}
+
+.tracker-panel[data-severity="Severe"] .log-item select {
+  border-color: rgba(185, 46, 45, 0.48);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 0 0 5px rgba(185, 46, 45, 0.13);
 }
 
 /* Right tracker column: skin image upload and save/clear buttons */
@@ -313,6 +347,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  border-radius: 22px;
 }
 
 .skin-image-control {
@@ -332,20 +367,18 @@
 .skin-image-placeholder,
 .tracker-image-preview {
   width: 100%;
-  border-radius: 12px;
+  border-radius: 18px;
 }
 
 .skin-image-placeholder {
   min-height: 190px;
-  background: #eef5f7;
-  border: 1px dashed rgba(52, 73, 85, 0.22);
-  color: #7f949c;
+  color: rgba(18, 35, 45, 0.46);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-size: 0.8rem;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .skin-image-placeholder p {
@@ -356,8 +389,7 @@
   display: block;
   max-height: 440px;
   object-fit: cover;
-  border: 1px solid rgba(52, 73, 85, 0.12);
-  box-shadow: 0 10px 22px rgba(36, 57, 64, 0.14);
+  padding: 6px;
 }
 
 .has-skin-image {
@@ -370,24 +402,6 @@
   margin-top: auto;
 }
 
-.save-log-btn {
-  background: #5b7885;
-  color: #ffffff;
-}
-
-.save-log-btn:hover {
-  background: #344955;
-}
-
-.clear-log-btn {
-  background: #ffffff;
-  color: #344955;
-}
-
-.clear-log-btn:hover {
-  background: #edf6f9;
-}
-
 /* Centered save message that appears after pressing Save Log */
 .save-toast {
   position: fixed;
@@ -396,11 +410,14 @@
   z-index: 9999;
   transform: translate(-50%, -50%);
   padding: 14px 20px;
-  background: #344955;
+  background: rgba(18, 35, 45, 0.62);
   color: #ffffff;
-  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 18px;
   font-weight: 900;
-  box-shadow: 0 18px 44px rgba(22, 32, 34, 0.3);
+  box-shadow: 0 18px 44px rgba(22, 32, 34, 0.3), var(--inner-highlight);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
   animation: savePop 0.25s ease;
 }
 

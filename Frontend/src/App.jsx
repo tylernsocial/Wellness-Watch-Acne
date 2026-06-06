@@ -1,6 +1,8 @@
 import { useState, useRef } from 'react'; /* allows a component remember information*/
 import './App.css';
 import AcneTracker from './AcneTracker.jsx';
+import aiAvatarSide from './assets/ai-avatar-side.png';
+import trackerAvatarFront from './assets/tracker-avatar-front.png';
 
 function App() { /* creates a react element called App which is reusable piece of UI*/
 
@@ -198,6 +200,22 @@ function App() { /* creates a react element called App which is reusable piece o
 
   return ( /* everything inside return is what appears on the screen */
     <div className="app">
+      <div className="avatar-backdrop" aria-hidden="true">
+        <img
+          src={aiAvatarSide}
+          alt=""
+          className="avatar-image avatar-image-left"
+        />
+
+        <img
+          src={trackerAvatarFront}
+          alt=""
+          className="avatar-image avatar-image-right"
+        />
+
+        <div className="avatar-severity-marks avatar-severity-marks-left"></div>
+        <div className="avatar-severity-marks avatar-severity-marks-right"></div>
+      </div>
 
       {/* floating top navbar */}
       <nav className="navbar">
