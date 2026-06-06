@@ -34,7 +34,9 @@ need to implement:
 "help make the model better" pin 
 
 main prio:
-better UI
+get better avatar
+implement small shadows or hover on added trackers 
+implement "How to use"
 
 
 future:
