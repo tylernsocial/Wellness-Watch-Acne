@@ -38,7 +38,7 @@ main prio:
 1. implement "How to use"
 
 2. redesign navbar 
-- 
+- move right line it up with main app, remove shadows, reduce round corners
 
 maybe implement/integrate SUPABASE
 
