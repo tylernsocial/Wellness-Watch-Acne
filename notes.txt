@@ -34,9 +34,10 @@ need to implement:
 "help make the model better" pin 
 
 main prio:
-get better avatar
-implement small shadows or hover on added trackers 
+
 implement "How to use"
+maybe implement/integrate SUPABASE
+redesign navbar 
 
 
 future:
