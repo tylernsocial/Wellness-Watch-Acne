@@ -35,10 +35,12 @@ need to implement:
 
 main prio:
 
-implement "How to use"
-maybe implement/integrate SUPABASE
-redesign navbar 
+1. implement "How to use"
 
+2. redesign navbar 
+- 
+
+maybe implement/integrate SUPABASE
 
 future:
 add a dashboard that can give you an analysis from how long you have been tracking, almost like a stock portfolio, maybe june to sept acne was high, sept to dec still a lot of breakouts 

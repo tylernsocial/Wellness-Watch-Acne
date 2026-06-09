@@ -26,7 +26,7 @@ const avatarThemeOptions = [
   { id: "black", label: "Black", color: "#121212" },
   { id: "pink", label: "Pink", color: "#f09abd" },
   { id: "blue", label: "Blue", color: "#5d99ff" },
-  { id: "box", label: "Box", color: "#e18a30" },
+  { id: "box", label: "Red", color: "#e13030" },
 ];
 
 const avatarImages = {
