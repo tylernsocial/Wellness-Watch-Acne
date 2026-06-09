@@ -1,8 +1,74 @@
 import { useState, useRef } from 'react'; /* allows a component remember information*/
 import './App.css';
 import AcneTracker from './AcneTracker.jsx';
-import aiAvatarSide from './assets/ai-avatar-side.png';
-import trackerAvatarFront from './assets/tracker-avatar-front.png';
+import clearFrontBlack from './assets/black/clear-front-black.png';
+import clearSideBlack from './assets/black/clear-side-black.png';
+import mildFrontBlack from './assets/black/mild-front-black.png';
+import mildSideBlack from './assets/black/mild-side-black.png';
+import modFrontBlack from './assets/black/mod-front-black.png';
+import modSideBlack from './assets/black/mod-side-black.png';
+import clearFrontBlue from './assets/blue/clear-front-blue.png';
+import clearSideBlue from './assets/blue/clear-side-blue.png';
+import mildFrontBlue from './assets/blue/mild-front-blue.png';
+import mildSideBlue from './assets/blue/mild-side-blue.png';
+import modFrontBlue from './assets/blue/mod-front-blue.png';
+import modSideBlue from './assets/blue/mod-side-blue.png';
+import clearFrontPink from './assets/pink/clear-front-pink.png';
+import clearSidePink from './assets/pink/clear-side-pink.png';
+import mildFrontPink from './assets/pink/mild-front-pink.png';
+import mildSidePink from './assets/pink/mild-side-pink.png';
+import modFrontPink from './assets/pink/mod-front-pink.png';
+import modSidePink from './assets/pink/mod-side-pink.png';
+import boxFront from './assets/box/box-front.png';
+import boxSide from './assets/box/box-side.PNG';
+
+const avatarThemeOptions = [
+  { id: "black", label: "Black", color: "#121212" },
+  { id: "pink", label: "Pink", color: "#f09abd" },
+  { id: "blue", label: "Blue", color: "#5d99ff" },
+  { id: "box", label: "Box", color: "#e18a30" },
+];
+
+const avatarImages = {
+  black: {
+    clear: { front: clearFrontBlack, side: clearSideBlack },
+    mild: { front: mildFrontBlack, side: mildSideBlack },
+    mod: { front: modFrontBlack, side: modSideBlack },
+  },
+  pink: {
+    clear: { front: clearFrontPink, side: clearSidePink },
+    mild: { front: mildFrontPink, side: mildSidePink },
+    mod: { front: modFrontPink, side: modSidePink },
+  },
+  blue: {
+    clear: { front: clearFrontBlue, side: clearSideBlue },
+    mild: { front: mildFrontBlue, side: mildSideBlue },
+    mod: { front: modFrontBlue, side: modSideBlue },
+  },
+  box: {
+    clear: { front: boxFront, side: boxSide },
+  },
+};
+
+function normalizeAvatarSeverity(severity) {
+  if (severity === "Mild") {
+    return "mild";
+  }
+
+  if (severity === "Moderate" || severity === "Severe") {
+    return "mod";
+  }
+
+  return "clear";
+}
+
+function getAvatarPair(theme, severity) {
+  if (theme === "box") {
+    return avatarImages.box.clear;
+  }
+
+  return avatarImages[theme]?.[severity] || avatarImages.black.clear;
+}
 
 function App() { /* creates a react element called App which is reusable piece of UI*/
 
@@ -11,6 +77,9 @@ function App() { /* creates a react element called App which is reusable piece o
   const [prediction, setPrediction] = useState(null); /* the model result from flask */
   const [loading, setLoading] = useState(false); /* whether the app is currently waiting for the backend */
   const [error, setError] = useState(null); /* stores and error message*/
+  const [avatarTheme, setAvatarTheme] = useState("black");
+  const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
+  const [trackerSeverity, setTrackerSeverity] = useState("");
 
   const [openPopup, setOpenPopup] = useState(null); /* stores which popup is open right now.
   null means no popup is open.
@@ -18,6 +87,14 @@ function App() { /* creates a react element called App which is reusable piece o
   "learnAcne" means the Learn Acne popup is open. */
 
   const fileInputRef = useRef(null); /* reference to the file input*/
+  const selectedAvatarTheme = avatarThemeOptions.find((theme) => theme.id === avatarTheme);
+  const avatarSeverity = normalizeAvatarSeverity(trackerSeverity);
+  const activeAvatarPair = getAvatarPair(avatarTheme, avatarSeverity);
+
+  function selectAvatarTheme(theme) {
+    setAvatarTheme(theme);
+    setAvatarMenuOpen(false);
+  }
 
   function handleImageChange(event) { /* runs when the user pickers a file*/
     const file = event.target.files[0]; /* event contains information about what just happened, the line means get the first file the user selected*/
@@ -202,15 +279,15 @@ function App() { /* creates a react element called App which is reusable piece o
     <div className="app">
       <div className="avatar-backdrop" aria-hidden="true">
         <img
-          src={aiAvatarSide}
+          src={activeAvatarPair.side}
           alt=""
-          className="avatar-image avatar-image-left"
+          className={`avatar-image avatar-image-left avatar-theme-${avatarTheme}`}
         />
 
         <img
-          src={trackerAvatarFront}
+          src={activeAvatarPair.front}
           alt=""
-          className="avatar-image avatar-image-right"
+          className={`avatar-image avatar-image-right avatar-theme-${avatarTheme}`}
         />
 
       </div>
@@ -235,12 +312,50 @@ function App() { /* creates a react element called App which is reusable piece o
           </button>
         </div>
 
-        <button
-          className="nav-button"
-          onClick={() => alert("Model contribution form coming soon!")}
-        >
-          Help Improve The Model
-        </button>
+        <div className="nav-actions">
+          <div className="avatar-theme-picker">
+            <button
+              type="button"
+              className="avatar-theme-button"
+              onClick={() => setAvatarMenuOpen((isOpen) => !isOpen)}
+              aria-label="Choose avatar theme"
+              aria-expanded={avatarMenuOpen}
+            >
+              <span
+                className="avatar-theme-dot"
+                style={{ backgroundColor: selectedAvatarTheme.color }}
+              ></span>
+            </button>
+
+            {avatarMenuOpen && (
+              <div className="avatar-theme-menu">
+                {avatarThemeOptions.map((theme) => (
+                  <button
+                    key={theme.id}
+                    type="button"
+                    className={`avatar-theme-option ${
+                      avatarTheme === theme.id ? "active-avatar-theme" : ""
+                    }`}
+                    onClick={() => selectAvatarTheme(theme.id)}
+                  >
+                    <span
+                      className="avatar-theme-dot"
+                      style={{ backgroundColor: theme.color }}
+                    ></span>
+                    {theme.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <button
+            className="nav-button"
+            onClick={() => alert("Model contribution form coming soon!")}
+          >
+            Help Improve The Model
+          </button>
+        </div>
       </nav>
 
       {/* main dashboard layout: classifier on the left and tracker on the right */}
@@ -353,7 +468,7 @@ function App() { /* creates a react element called App which is reusable piece o
         </section>
 
         {/* right side: acne tracker component */}
-        <AcneTracker />
+        <AcneTracker onSeverityChange={setTrackerSeverity} />
 
       </main>
 

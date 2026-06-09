@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./AcneTracker.css";
 
 /* creates a blank daily log whenever there is no saved data for a date */
@@ -127,7 +127,7 @@ function formatDisplayDate(dateValue) {
   return `${monthName} ${day}${daySuffix}`;
 }
 
-function AcneTracker() {
+function AcneTracker({ onSeverityChange }) {
   /* creates today's date using the user's local timezone instead of UTC */
   const today = formatDate(new Date());
   const savedLogs = readSavedTrackerLogs();
@@ -152,6 +152,12 @@ function AcneTracker() {
 
   /* stores the save message for successfully saving the log */
   const [showSaveMessage, setShowSaveMessage] = useState(false);
+
+  useEffect(() => {
+    if (onSeverityChange) {
+      onSeverityChange(formData.severity);
+    }
+  }, [formData.severity, onSeverityChange]);
 
   /* opens the small card/form for adding a new bubble */
   function openAddForm(category) {
