@@ -367,7 +367,7 @@ function App() { /* creates a react element called App which is reusable piece o
             <p className="eyebrow">AI Skin Analysis</p>
             <h1>Acne Classifier</h1>
             <p className="panel-description">
-              Upload an image to classify acne severity using your trained model.
+              Upload an image to classify acne type using the trained model.
             </p>
           </div>
 
