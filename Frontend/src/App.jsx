@@ -84,6 +84,7 @@ function App() { /* creates a react element called App which is reusable piece o
   const [openPopup, setOpenPopup] = useState(null); /* stores which popup is open right now.
   null means no popup is open.
   "about" means the About popup is open.
+  "howToUse" means the How To Use popup is open.
   "learnAcne" means the Learn Acne popup is open. */
 
   const fileInputRef = useRef(null); /* reference to the file input*/
@@ -293,24 +294,33 @@ function App() { /* creates a react element called App which is reusable piece o
       </div>
 
       {/* floating top navbar */}
-      <nav className="navbar">
-        <div className="logo">Wellness Watch Acne</div>
+      <header className="top-header">
+        <nav className="navbar">
+          <div className="logo">Wellness Watch Acne</div>
 
-        <div className="nav-links">
-          <button
-            className="nav-link-button"
-            onClick={() => setOpenPopup("about")} /* opens the About popup */
-          >
-            About
-          </button>
+          <div className="nav-links">
+            <button
+              className="nav-link-button"
+              onClick={() => setOpenPopup("about")} /* opens the About popup */
+            >
+              About
+            </button>
 
-          <button
-            className="nav-link-button"
-            onClick={() => setOpenPopup("learnAcne")} /* opens the Learn Acne popup */
-          >
-            Learn Acne
-          </button>
-        </div>
+            <button
+              className="nav-link-button"
+              onClick={() => setOpenPopup("howToUse")} /* opens the How To Use popup */
+            >
+              How To Use
+            </button>
+
+            <button
+              className="nav-link-button"
+              onClick={() => setOpenPopup("learnAcne")} /* opens the Learn Acne popup */
+            >
+              Learn Acne
+            </button>
+          </div>
+        </nav>
 
         <div className="nav-actions">
           <div className="avatar-theme-picker">
@@ -356,7 +366,7 @@ function App() { /* creates a react element called App which is reusable piece o
             Help Improve The Model
           </button>
         </div>
-      </nav>
+      </header>
 
       {/* main dashboard layout: classifier on the left and tracker on the right */}
       <main className="main-card">
@@ -472,7 +482,7 @@ function App() { /* creates a react element called App which is reusable piece o
 
       </main>
 
-      {/* popup card that opens when the About or Learn Acne navbar buttons are clicked */}
+      {/* popup card that opens when the About, How To Use, or Learn Acne navbar buttons are clicked */}
       {openPopup && (
         <div className="popup-overlay">
           <div className="popup-card">
@@ -510,6 +520,27 @@ function App() { /* creates a react element called App which is reusable piece o
                 <p className="popup-note">
                   This tool is for learning and tracking support only. It is not a
                   medical diagnosis.
+                </p>
+              </div>
+            )}
+
+            {openPopup === "howToUse" && (
+              <div>
+                <p className="eyebrow">Guide</p>
+                <h2>How To Use</h2>
+
+                <ol className="popup-steps">
+                  <li>Choose or drag in a skin image on the AI Skin Analysis side.</li>
+                  <li>Click "Classify Image" to get the predicted acne type and confidence score.</li>
+                  <li>Use the Acne Tracker to log food, sleep, workout/shower timing, skincare, notes, and acne severity.</li>
+                  <li>Add a skin image to the tracker if you want a visual record for the day.</li>
+                  <li>Save the log so you can compare habits and breakouts over time.</li>
+                  <li>Change the avatar style using the character selector in the nav if you want a different visual theme.</li>
+                </ol>
+
+                <p className="popup-note">
+                  Your tracker entries are saved in this browser so you can return
+                  to previous days and compare patterns.
                 </p>
               </div>
             )}
