@@ -377,7 +377,7 @@ function App() { /* creates a react element called App which is reusable piece o
             <p className="eyebrow">AI Skin Analysis</p>
             <h1>Acne Classifier</h1>
             <p className="panel-description">
-              Upload an image to classify acne type using the trained model.
+              Upload an image to classify acne type using the trained model. For best results, upload a clear image focused only on the affected skin area. Try to avoid including extra background, objects, or anything that may distract from the acne.
             </p>
           </div>
 
