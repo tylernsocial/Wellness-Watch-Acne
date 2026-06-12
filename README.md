@@ -110,7 +110,9 @@ The tracker is designed to help users reflect on daily habits and notice possibl
 
 ## AI / Machine Learning Model
 
-The acne classification model used in this project was created entirely by me.
+The acne classification model used in this project was created entirely by me. 
+
+https://github.com/tylernsocial/Acne-Classifier
 
 I built the dataset, cleaned and processed the images, trained multiple models, evaluated the results, and selected the final model used in the application. This was not a pre-built acne classifier or an external acne detection API. The model was trained specifically for this project.
 
