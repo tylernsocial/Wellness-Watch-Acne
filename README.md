@@ -1,4 +1,4 @@
-# Acne Classifier & Tracker Web App
+# Wellness Watch Acne (Custom AI Acne Classifier & Tracker Web App)
 
 This project is a full-stack web application that allows users to upload a facial skin image and receive an AI-generated acne classification. The app also includes an acne tracking section where users can log daily lifestyle and skincare information such as food intake, sleep, workout-to-shower timing, and skincare products.
 
